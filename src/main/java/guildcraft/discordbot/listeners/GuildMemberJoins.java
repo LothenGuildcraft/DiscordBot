@@ -14,12 +14,12 @@ import org.jetbrains.annotations.NotNull;
  * @version 1.0
  * @since 2023-12-30
  */
-public class guildMemberJoins extends ListenerAdapter {
+public class GuildMemberJoins extends ListenerAdapter {
     
     /**
      * Initialize the Listener for when a guildMemberJoins the server/guild
      */
-    public guildMemberJoins() {
+    public GuildMemberJoins() {
         super();
     }
     
