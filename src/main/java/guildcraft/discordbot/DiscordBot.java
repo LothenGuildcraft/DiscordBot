@@ -1,8 +1,7 @@
 package guildcraft.discordbot;
 
-import guildcraft.discordbot.environmentVariables.readEnvironmentFiles;
-import guildcraft.discordbot.listeners.guildMemberJoins;
-import java.nio.file.*;
+import guildcraft.discordbot.environmentVariables.ReadEnvironmentFiles;
+import guildcraft.discordbot.listeners.GuildMemberJoins;
 import javax.swing.JFrame;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
@@ -59,21 +58,19 @@ public class DiscordBot {
      * This method adds the different events and commands that the bot can do in the Discord Server.
      */
     public void addEventListeners() {
-        shardManager.addEventListener(new guildMemberJoins());
+        shardManager.addEventListener(new GuildMemberJoins());
     }
 
     /**
-     * Tells the JVM to run this code specifically. This method initializes the program itself
+     * Standard main method. Lets start the program. 
      * 
      * @param args No explicit use for incoming arguments
      */
     public static void main(String[] args) {
-        Path currentRelativePath = Paths.get("");
-        String envFile = currentRelativePath.toAbsolutePath().toString() + "\\src\\main\\java\\guildcraft\\discordbot\\environmentVariables\\.env";
-        readEnvironmentFiles tokens = new readEnvironmentFiles(envFile);
+        ReadEnvironmentFiles tokens = new ReadEnvironmentFiles();
         DiscordBot bot = new DiscordBot(
-                tokens.variableValue("BOT_TOKEN")
-                //comment the next line out if you do not want a gui
+                tokens.getEnvValue("BOT_TOKEN")
+                //Comment the next line out if you do not want a gui representation of the program running
                 , new JFrame("Testing")
         );
         bot.addEventListeners();
