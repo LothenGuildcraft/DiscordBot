@@ -2,6 +2,7 @@ package guildcraft.discordbot;
 
 import guildcraft.discordbot.environmentVariables.ReadEnvironmentFiles;
 import guildcraft.discordbot.listeners.GuildMemberJoins;
+import guildcraft.discordbot.listeners.SlashCommands;
 import javax.swing.JFrame;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
@@ -34,7 +35,7 @@ public class DiscordBot {
         builder = DefaultShardManagerBuilder.createDefault(token);
         builder.setStatus(OnlineStatus.ONLINE);
         builder.setActivity(Activity.watching("Guildcraft Bot"));
-        builder.enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_PRESENCES);
+        builder.enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MESSAGE_POLLS);
 
         shardManager = builder.build();
     }
@@ -58,11 +59,13 @@ public class DiscordBot {
      * This method adds the different events and commands that the bot can do in the Discord Server.
      */
     public void addEventListeners() {
-        shardManager.addEventListener(new GuildMemberJoins());
+        shardManager.addEventListener(new GuildMemberJoins(), new SlashCommands());
     }
 
     /**
      * Standard main method. Lets start the program. 
+     * A window is generated when started. To remove the window comment or remove this line: 
+     *  , new JFrame("Testing")
      * 
      * @param args No explicit use for incoming arguments
      */

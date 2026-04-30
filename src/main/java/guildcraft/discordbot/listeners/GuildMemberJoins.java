@@ -6,6 +6,8 @@ import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Creates the listener logic for when a user joins the discord server/guild for the first time
@@ -15,6 +17,8 @@ import org.jetbrains.annotations.NotNull;
  * @since 2023-12-30
  */
 public class GuildMemberJoins extends ListenerAdapter {
+    
+    private static final Logger logger = LoggerFactory.getLogger(GuildMemberJoins.class);
     
     /**
      * Initialize the Listener for when a guildMemberJoins the server/guild
@@ -36,6 +40,7 @@ public class GuildMemberJoins extends ListenerAdapter {
         String message = "Before you can see the rest of the server, please verify yourself by typing in your name in this chat.";
         TextChannel getChannel = event.getGuild().getTextChannelsByName("welcome", true).get(0);
         getChannel.sendMessage(message).queue();
+        logger.info("Message is sent to Discord Queue");
     }
     
     /**
